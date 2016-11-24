@@ -1,0 +1,9 @@
+Greetings,
+
+An account was registered with this email address on Jalopalert.
+
+To confirm this account, click this link:
+
+{{ url_for('confirm', code=user.confirmation, _external=True) }}
+
+Otherwise, just ignore this message.

@@ -33,6 +33,7 @@
 				</ul>
 				{% else %}
 				<ul class="nav navbar-nav navbar-right">
+					<li><a href="{{ url_for('register') }}">Sign Up</a></li>
 					<li><a href="{{ url_for('login') }}">Login</a></li>
 				</ul>
 				{% endif %}

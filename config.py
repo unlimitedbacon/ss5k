@@ -12,8 +12,13 @@ SECRET_KEY = "%Sy@i$6$suq@0cNO"
 #Mail server settings
 MAIL_SERVER = 'localhost'
 MAIL_PORT = 25
+MAIL_USE_TLS = False
+MAIL_USE_SSL = False
 MAIL_USERNAME = None
 MAIL_PASSWORD = None
+MAIL_DEFAULT_SENDER = 'jalopalert@garage-laptop.localdomain'
+MAIL_MAX_EMAILS = None
+MAIL_ASCII_ATTACHMENTS = False
 
 #Administrator list
-ADMINS = ['admin@localhost']
+ADMINS = ['tyler@garage-laptop.localdomain']

@@ -4,6 +4,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm
 from .forms import RegisterForm, LoginForm, AddCarForm, EditForm
 from .models import User, Car
+from .email import send_confirmation
 
 @app.before_request
 def before_request():
@@ -40,10 +41,9 @@ def register():
             return render_template('register.html', title='Register', form=form)
         user = User(email, password)
         db.session.add(user)
+        send_confirmation(user)
         db.session.commit()
-        login_user(user, False)
-        flash('Welcome to Jalopalert, %s' % email, 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('pending'))
     return render_template('register.html', title='Register', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -54,16 +54,36 @@ def login():
     elif form.validate():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
-            login_user(user, form.remember_me.data)
-            return redirect(request.args.get('next') or url_for('index'))
+            if user.confirmed:
+                login_user(user, form.remember_me.data)
+                return redirect(request.args.get('next') or url_for('index'))
+            else:
+                return redirect(url_for('pending'))
         flash('Invalid username or password')
-        return render_template('login.html', title='Login', form=form)
     return render_template('login.html', title='Login', form=form)
 
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route('/confirm/<code>')
+def confirm(code):
+    user = User.query.filter(User.confirmation == code).first()
+    if not user:
+        flash('Invalid confirmation code')
+        return redirect(url_for('index'))
+    else:
+        user.confirmed = True
+        user.confirmation = None
+        login_user(user)
+        db.session.commit()
+        flash('Account activated. Welcome to Jalopalert.', 'success')
+        return redirect(url_for('your_cars'))
+
+@app.route('/pending')
+def pending():
+    return render_template('pending.html')
 
 @app.route('/your_cars')
 @login_required

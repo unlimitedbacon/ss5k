@@ -2,12 +2,16 @@ from app import db
 from datetime import datetime
 from hashlib import md5
 import bcrypt
+import os
+import base64
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(256), index=True, unique=True, nullable = False)
     password = db.Column(db.String)
     created = db.Column(db.DateTime)
+    confirmed = db.Column(db.Boolean)
+    confirmation = db.Column(db.String)
     passwordReset = db.Column(db.String(128))
     passwordResetExpiry = db.Column(db.DateTime)
     cars = db.relationship('Car')
@@ -26,6 +30,8 @@ class User(db.Model):
         self.email = email
         self.created = datetime.now()
         self.set_password(password)
+        self.confirmed = False
+        self.confirmation = base64.b32encode(os.urandom(20)).decode('utf-8')
 
     def __repr__(self):
         return '<User %r>' % (self.email)
