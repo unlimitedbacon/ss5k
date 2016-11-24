@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+	<h1>{{ title }}</h1>
+</div>
+<table class="table">
+	<tbody>
+		<tr>
+			<form role="form" action="" method="POST">
+				{{ form.hidden_tag() }}
+				<td>{{ form.make(class_="form-control",placeholder="Make") }}</td>
+				<td>{{ form.model(class_="form-control",placeholder="Model") }}</td>
+				<td>{{ form.years(class_="form-control") }}</td>
+				<td>{{ form.yards(class_="form-control") }}</td>
+				<td>
+					<a class="btn btn-default" href="{{ url_for('your_cars') }}" role="button">Cancel</a>
+					{{ form.submit(class_="btn btn-primary") }}
+				</td>
+			</form>
+		</tr>
+	</tbody>
+</table>
+{% endblock %}
