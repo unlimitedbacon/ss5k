@@ -25,7 +25,7 @@
 			<div class="form-group">
 			{% endif %}
 				<label for="password" class="col-sm-2 control-label">Password</label>
-				<div class="col-sm-6">{{ form.password(class_="form-control") }}</div>
+				<div class="col-sm-6">{{ form.password(class_="form-control", data_toggle="password") }}</div>
 				{% for e in form.password.errors %}
 				<div class="col-sm-4 help-block">{{ e }}</div>
 				{% endfor %}
@@ -36,4 +36,8 @@
 		</form>
 	</div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/bootstrap-show-password.min.js"></script>
 {% endblock %}

@@ -26,12 +26,7 @@
 			{% endif %}
 				<label for="password" class="col-sm-2 control-label">Password</label>
 				<div class="col-sm-6">
-					<div class="input-group">
-						{{ form.password(class_="form-control") }}
-						<div class="input-group-btn">
-							<button class="btn btn-default" type="button">Show</button>
-						</div>
-					</div>
+				{{ form.password(class_="form-control", data_toggle="password") }}
 				</div>
 				{% for e in form.password.errors %}
 				<div class="col-sm-4 help-block">{{ e }}</div>
@@ -57,4 +52,9 @@
 		</form>
 	</div>
 </div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="/static/bootstrap-show-password.min.js"></script>
 {% endblock %}
