@@ -4,4 +4,4 @@ flask/
 __pycache__/
 tmp/*
 app/__pycache__/
-app/static/bootstrap-3.3.7-dist/
+node_modules/
