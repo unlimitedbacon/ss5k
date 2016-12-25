@@ -102,7 +102,7 @@ def add_car(title='Add Car',car=None):
     # Load car info if we are doing an edit
     if edit:
         car_id = car.id
-        years = car.years.split(',')
+        years = car.years.split(', ')
         yards = [ y.id for y in car.yards ]
         form = AddCarForm(make=car.make,model=car.model,years=years,yards=yards)
     else:

@@ -77,7 +77,7 @@ class Car(db.Model):
     def __init__(self, make, model, years, yards, user):
         self.make = make
         self.model = model
-        self.years = ','.join(years)
+        self.years = ', '.join(years)
         self.user_id = user.id
         for yard in yards:
             yard_id = int(yard)
