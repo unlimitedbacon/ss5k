@@ -2,9 +2,9 @@ from datetime import datetime
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm
-from .forms import RegisterForm, LoginForm, AddCarForm, EditForm
+from .forms import RegisterForm, LoginForm, EmailForm, PasswordForm, AddCarForm, EditForm
 from .models import User, Car
-from .email import send_confirmation
+from .email import send_confirmation, send_reset
 
 @app.before_request
 def before_request():
@@ -61,6 +61,47 @@ def login():
                 return redirect(url_for('pending'))
         flash('Invalid username or password')
     return render_template('login.html', title='Login', form=form)
+
+@app.route('/reset-pw', methods=['GET', 'POST'])
+def reset_pw():
+    form = EmailForm()
+    if request.method == 'GET':
+        return render_template('reset-pw.html', title='Reset Password', form=form)
+    elif form.validate():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is not None:
+            user.reset_password()
+            db.session.commit()
+            send_reset(user)
+        flash('A message has been sent to your email address. Click the link in the message to proceed', 'success')
+        return redirect(url_for('index'))
+    return render_template('reset-pw.html', title='Reset Password', form=form)
+
+@app.route('/confirm-reset/<code>', methods=['GET', 'POST'])
+def confirm_reset(code):
+    user = User.query.filter(User.passwordReset == code).first()
+    if not user:
+        flash('Invalid reset code')
+        return redirect(url_for('index'))
+    if user.passwordResetExpiry < datetime.now():
+        flash('Invalid reset code')
+        return redirect(url_for('index'))
+    form = PasswordForm()
+    if request.method == 'GET':
+        return render_template('confirm-reset.html', title='Create New Password', form=form)
+    elif form.validate():
+        password = form.password.data
+        if len(password) < 8:
+            flash('Passwords must be 8 characters or more')
+            return render_template('confirm-reset.html', title='Create New Password', form=form)
+        user.set_password(password)
+        user.passwordReset = None
+        user.passwordResetExpiry = None
+        db.session.commit()
+        login_user(user)
+        flash('Password succesfully changed', 'success')
+        return redirect(url_for('index'))
+    return render_template('confirm-reset.html', title='Create New Password', form=form)
 
 @app.route('/logout')
 def logout():

@@ -1,0 +1,7 @@
+<h1>Greetings,</h1>
+
+<p>Someone, probably you, has asked us to reset the password on your account. If that was indeed you, click this link to proceed:</p>
+
+<p><a href="{{ url_for('confirm_reset', code=user.passwordReset, _external=True) }}">Click here to create a new password</a></p>
+
+<p>You have 24 hours before this link expires. If you didn't ask for a reset, ignore this email.</p>

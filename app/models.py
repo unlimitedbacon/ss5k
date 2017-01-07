@@ -1,5 +1,5 @@
 from app import db
-from datetime import datetime
+from datetime import datetime, timedelta
 from hashlib import md5
 import bcrypt
 import os
@@ -12,13 +12,17 @@ class User(db.Model):
     created = db.Column(db.DateTime)
     confirmed = db.Column(db.Boolean)
     confirmation = db.Column(db.String)
-    passwordReset = db.Column(db.String(128))
+    passwordReset = db.Column(db.String)
     passwordResetExpiry = db.Column(db.DateTime)
     cars = db.relationship('Car')
     last_seen = db.Column(db.DateTime)
 
     def set_password(self, password):
         self.password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+
+    def reset_password(self):
+        self.passwordReset = base64.b32encode(os.urandom(20)).decode('utf-8')
+        self.passwordResetExpiry = datetime.now() + timedelta(days=1)
 
     def verify_password(self, password):
         return bcrypt.checkpw(password.encode(), self.password)

@@ -23,6 +23,14 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Keep me logged in', default=False)
     submit = SubmitField('Log In')
 
+class EmailForm(FlaskForm):
+    email = StringField('Email', validators=[Required(), Length(1, 256), Email()])
+    submit = SubmitField('Reset Password')
+
+class PasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[Required()])
+    submit = SubmitField('Set Password')
+
 class AddCarForm(FlaskForm):
     make = StringField('make')
     model = StringField('model')
