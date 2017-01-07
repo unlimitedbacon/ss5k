@@ -16,7 +16,7 @@ MAIL_USE_TLS = False
 MAIL_USE_SSL = False
 MAIL_USERNAME = None
 MAIL_PASSWORD = None
-MAIL_DEFAULT_SENDER = 'jalopalert@garage-laptop.localdomain'
+MAIL_DEFAULT_SENDER = 'scrapscanner5000@garage-laptop.localdomain'
 MAIL_MAX_EMAILS = None
 MAIL_ASCII_ATTACHMENTS = False
 

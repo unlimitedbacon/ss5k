@@ -78,7 +78,7 @@ def confirm(code):
         user.confirmation = None
         login_user(user)
         db.session.commit()
-        flash('Account activated. Welcome to Jalopalert.', 'success')
+        flash('Account activated. Welcome to the Scrap Scanner 5000.', 'success')
         return redirect(url_for('your_cars'))
 
 @app.route('/pending')
