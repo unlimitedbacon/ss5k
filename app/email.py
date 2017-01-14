@@ -26,3 +26,12 @@ def send_reset(user):
     msg.html = render_template('emails/reset-pw.html', user=user)
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
+
+def send_notification(user, car):
+    with app.app_context():
+        msg = Message('New %s %s at the junkyard' % (car.make, car.model))
+        msg.recipients = [user.email]
+        #msg.body = render_template('emails/notification.txt', user=user, car=car)
+        msg.html = render_template('emails/notification.html', user=user, car=car)
+        thr = Thread(target=send_async_email, args=[app, msg])
+        thr.start()

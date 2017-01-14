@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm
 from .forms import RegisterForm, LoginForm, EmailForm, PasswordForm, AddCarForm, EditForm
-from .models import User, Car
+from .models import User, WantedCar
 from .email import send_confirmation, send_reset
 
 @app.before_request
@@ -129,7 +129,7 @@ def pending():
 @app.route('/your_cars')
 @login_required
 def your_cars():
-    cars = g.user.cars
+    cars = g.user.wanted_cars
     return render_template('your_cars.html',
                            title='Your Cars',
                            cars=cars)
@@ -149,13 +149,13 @@ def add_car(title='Add Car',car=None):
     else:
         form = AddCarForm()
     if request.method == 'GET':
-        if len(g.user.cars) >= 20:
+        if len(g.user.wanted_cars) >= 20:
             flash('Sorry, you cannot have more than 20 cars')
             return redirect(url_for('your_cars'))
         else:
             return render_template('add_car.html', title=title, form=form)
     elif form.validate():
-        if not edit and len(g.user.cars) >= 20:
+        if not edit and len(g.user.wanted_cars) >= 20:
             flash('Sorry, you cannot have more than 20 cars')
             return redirect(url_for('your_cars'))
         make = form.make.data
@@ -172,7 +172,7 @@ def add_car(title='Add Car',car=None):
         # Delete original if this is an edit
         if edit:
             db.session.delete(car)
-        car = Car(make,model,years,yards,g.user)
+        car = WantedCar(make,model,years,yards,g.user)
         db.session.add(car)
         db.session.commit()
         flash('Car Saved', 'success')
@@ -183,7 +183,7 @@ def add_car(title='Add Car',car=None):
 @app.route('/edit_car/<int:car_id>', methods=['GET', 'POST'])
 @login_required
 def edit_car(car_id):
-    car = Car.query.get(car_id)
+    car = WantedCar.query.get(car_id)
     if car is None:
         flash('Car does not exist')
         return redirect(url_for('your_cars'))
@@ -195,7 +195,7 @@ def edit_car(car_id):
 @app.route('/delete_car/<int:car_id>')
 @login_required
 def delete_car(car_id):
-    car = Car.query.get(car_id)
+    car = WantedCar.query.get(car_id)
     if car is None:
         flash('Car does not exist')
         return redirect(url_for('your_cars'))

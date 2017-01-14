@@ -14,7 +14,7 @@ class User(db.Model):
     confirmation = db.Column(db.String)
     passwordReset = db.Column(db.String)
     passwordResetExpiry = db.Column(db.DateTime)
-    cars = db.relationship('Car')
+    wanted_cars = db.relationship('WantedCar')
     last_seen = db.Column(db.DateTime)
 
     def set_password(self, password):
@@ -63,19 +63,19 @@ class User(db.Model):
         except NameError:
             return str(self.id)     # Python 3
 
-junkyard_car_links = db.Table('junkyard_car_links',
-        db.Column('car_id', db.Integer, db.ForeignKey('car.id'), primary_key=True),
+junkyard_wantedcar_links = db.Table('junkyard_wantedcar_links',
+        db.Column('wantedcar_id', db.Integer, db.ForeignKey('wanted_car.id'), primary_key=True),
         db.Column('junkyard_id', db.Integer, db.ForeignKey('junkyard.id'), primary_key=True)
         )
 
-class Car(db.Model):
+class WantedCar(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     make = db.Column(db.String)
     model = db.Column(db.String)
     years = db.Column(db.String)
     yards = db.relationship('Junkyard',
-                            secondary=junkyard_car_links,
-                            back_populates='cars')
+                            secondary=junkyard_wantedcar_links,
+                            back_populates='wanted_cars')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, make, model, years, yards, user):
@@ -88,7 +88,7 @@ class Car(db.Model):
             self.yards.append( Junkyard.query.get(yard_id) )
 
     def __repr__(self):
-        return '<Car %r>' % (self.id)
+        return '<WantedCar %r %r %r>' % (self.id, self.make, self.model)
 
     def list_yards(self):
         ylist = [y.city for y in self.yards]
@@ -102,9 +102,19 @@ class Junkyard(db.Model):
     city = db.Column(db.String)
     company = db.Column(db.String)
     name = db.Column(db.String)
-    cars = db.relationship('Car',
-                           secondary=junkyard_car_links,
-                           back_populates='yards')
+    cars = db.relationship('Car')
+    wanted_cars = db.relationship('WantedCar',
+                           secondary=junkyard_wantedcar_links,
+                           back_populates='yards',
+                           lazy='subquery')
+
+    # Get a list of other wanted cars with matching make/model
+    def match_searches(self, wanted_car):
+        matches = []
+        for c in self.wanted_cars:
+            if c.make == wanted_car.make and c.model == wanted_car.model:
+                matches.append(c)
+        return matches
 
     def __init__(self, code, state, city):
         self.code = code
@@ -117,3 +127,20 @@ class Junkyard(db.Model):
     def __repr__(self):
         return '<Junkyard %r %r %r>' % (self.code, self.state, self.city)
 
+class Car(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    uid = db.Column(db.String, index=True)
+    image = db.Column(db.String)
+    imglink = db.Column(db.String)
+    make = db.Column(db.String)
+    model = db.Column(db.String)
+    year = db.Column(db.String)
+    arrival_date = db.Column(db.Date)
+    notes = db.Column(db.String)
+    yard_id = db.Column(db.Integer, db.ForeignKey('junkyard.id'))
+    
+    def __init__(self, yard):
+        self.yard_id = yard.id
+
+    def __repr__(self):
+        return '<Car %r %r %r %r>' % (self.year, self.make, self.model, self.id)

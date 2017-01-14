@@ -1,0 +1,76 @@
+id,code,country,state,city,company,name
+1,265,USA,CA,Anaheim,LKQ,Pick Your Part
+2,223,USA,AL,Huntsville,LKQ,Self Service
+3,260,USA,CA,Bakersfield,LKQ,Pick Your Part
+4,264,USA,CA,Chula Vista,LKQ,Pick Your Part
+5,283,USA,CA,Chula Vista (North),LKQ,Pick Your Part
+6,285,USA,CA,Fontana,LKQ,Pick Your Part
+7,262,USA,CA,Wilmington,LKQ,Pick Your Part - Help Yourself
+8,268,USA,CA,Oceanside,LKQ,Pick Your Part
+9,284,USA,CA,Rialto,LKQ,Pick Your Part
+10,282,USA,CA,Santa Fe Springs,LKQ,Pick Your Part
+11,268,USA,CA,Stanton,LKQ,Pick Your Part
+12,263,USA,CA,Sun Valley,LKQ,Pick Your Part
+13,289,USA,CA,Thousand Palms,LKQ,Pick Your Part
+14,287,USA,CA,Victorville,LKQ,Pick Your Part
+15,261,USA,CA,Wilmington,LKQ,Pick Your Part
+16,292,USA,CA,Hesperia,LKQ,Pick-A-Part
+17,281,USA,CA,Monrovia,LKQ,Pick-A-Part
+18,280,USA,CA,Ontario,LKQ,Pick-A-Part
+19,290,USA,CA,Riverside,LKQ,Pick-A-Part
+20,291,USA,CA,San Bernardino,LKQ,Pick-A-Part
+21,230,USA,CO,Aurora,LKQ,Pick Your Part
+22,232,USA,CO,Denver,LKQ,Pick Your Part
+23,196,USA,FL,West Palm Beach,LKQ,ABC Pick Your Part
+24,197,USA,FL,Riviera Beach,LKQ,Atlantic Pick Your Part
+25,185,USA,FL,Bradenton,LKQ,Pick Your Part
+26,190,USA,FL,Clearwater,LKQ,Pick Your Part
+27,225,USA,FL,Daytona,LKQ,Pick Your Part
+28,198,USA,FL,Davie,LKQ,Pick Your Part - Ft. Lauderdale
+29,188,USA,FL,Jacksonville,LKQ,Pick Your Part
+30,189,USA,FL,Largo,LKQ,Pick Your Part
+31,134,USA,FL,Orlando,LKQ,Pick Your Part
+32,180,USA,FL,Tampa,LKQ,Pick Your Part
+33,192,USA,FL,Medley,LKQ,Pick Your Part - U-Pick
+34,224,USA,FL,Gainesville,LKQ,Self Service
+35,229,USA,GA,Fayetteville,LKQ,Pick Your Part
+36,163,USA,GA,Savannah,LKQ,Pick Your Part
+37,582,USA,IL,Blue Island,LKQ,Pick Your Part
+38,581,USA,IL,Chicago,LKQ,Pick Your Part
+39,584,USA,IL,Chicago Heights,LKQ,Pick Your Part
+40,250,USA,IL,Rockford,LKQ,Pick Your Part
+41,254,USA,IN,Fort Wayne,LKQ,Pick Your Part
+42,255,USA,IN,South Bend,LKQ,Pick Your Part
+43,246,USA,KS,Wichita,LKQ,Pick Your Part
+44,175,USA,LA,Port Allen,LKQ,Self Service - Baton Rouge
+45,205,USA,MD,Baltimore,LKQ,Pick Your Part
+46,207,USA,MD,Baltimore,LKQ,Pick Your Part - Baltimore Hawkins
+47,209,USA,MD,Edgewood,LKQ,Pick Your Part
+48,206,USA,MD,Jessup,LKQ,Pick Your Part
+49,208,USA,MD,Mount Airy,LKQ,Pick Your Part
+50,348,USA,MI,Wayland,LKQ,Pick Your Part - Grand Rapids
+51,346,USA,MI,Holland,LKQ,Pick Your Part
+52,277,USA,MN,Blaine,LKQ,Pick Your Part
+53,228,USA,NC,Charlotte,LKQ,Pick Your Part
+54,142,USA,NC,Durham,LKQ,Pick Your Part
+55,227,USA,NC,Greenville,LKQ,Pick Your Part - East NC
+56,226,USA,NC,Greensboro,LKQ,Pick Your Part
+57,168,USA,NC,Raleigh,LKQ,Pick Your Part
+58,253,USA,OH,Cincinnati,LKQ,Pick Your Part
+59,257,USA,OH,Dayton,LKQ,Pick Your Part
+60,259,USA,OH,Toledo,LKQ,Pick Your Part
+61,746,USA,OK,Tulsa,LKQ,Pick Your Part
+62,245,USA,OK,Oklahoma City,LKQ,Self Service
+63,111,Canada,QC,Pintendre,LKQ,Pintendre Surplus
+64,213,USA,SC,Greer,LKQ,Pick Your Part
+65,220,USA,SC,Charleston,LKQ,Pick Your Part
+66,212,USA,SC,Greenville,LKQ,Self Service
+67,217,USA,TN,Chattanooga,LKQ,Pick Your Part
+68,215,USA,TN,Memphis,LKQ,Pick Your Part
+69,218,USA,TN,Nashville,LKQ,Pick Your Part
+70,234,USA,TX,Austin,LKQ,Pick Your Part
+71,241,USA,TX,El Paso,LKQ,Pick Your Part
+72,235,USA,TX,Houston,LKQ,Pick Your Part - Houston Northville
+73,239,USA,TX,Houston,LKQ,Pick Your Part - Houston SW
+74,236,USA,TX,Houston,LKQ,Pick Your Part - Houston Wallisville
+75,256,USA,WI,Milwaukee,LKQ,Self Service
