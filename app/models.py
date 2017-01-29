@@ -136,7 +136,7 @@ class Car(db.Model):
     model = db.Column(db.String)
     year = db.Column(db.String)
     arrival_date = db.Column(db.Date)
-    notes = db.Column(db.String)
+    notes = db.Column(db.Text)
     yard_id = db.Column(db.Integer, db.ForeignKey('junkyard.id'))
     
     def __init__(self, yard):

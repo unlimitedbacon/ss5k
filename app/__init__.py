@@ -37,4 +37,5 @@ if not app.debug:
     app.logger.addHandler(file_handler)
     app.logger.info('Startup')
 
-from app import views, models
+from app import models
+from app import views
