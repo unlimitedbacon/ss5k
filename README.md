@@ -13,12 +13,18 @@ The Scrap Scanner 5000 is designed to run on Python 3.6 and uses the [Flask fram
 
 1. Create a virtualenv for python.
 
-        python -m venv flask
+        $ python -m venv flask
 
 2. Install python packages
 
-        flask/bin/pip install -r requirements.txt
+        $ flask/bin/pip install -r requirements.txt
         
 3. Install javascript packages
 
-        npm update
+        $ npm update
+
+4. Setup the database.
+
+        $ flask/bin/python
+        >>> from app import db
+        >>> db.create_all()
