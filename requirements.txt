@@ -1,0 +1,9 @@
+bcrypt
+beautifulsoup4
+Flask
+Flask-Login
+Flask-Mail
+Flask-Migrate
+Flask-Script
+Flask-SQLAlchemy
+Flask-WTF

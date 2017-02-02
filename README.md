@@ -17,15 +17,7 @@ The Scrap Scanner 5000 is designed to run on Python 3.6 and uses the [Flask fram
 
 2. Install python packages
 
-        flask/bin/pip install flask
-        flask/bin/pip install flask-script
-        flask/bin/pip install flask-sqlalchemy
-        flask/bin/pip install flask-migrate
-        flask/bin/pip install flask-login
-        flask/bin/pip install flask-mail
-        flask/bin/pip install flask-wtf
-        flask/bin/pip install bcrypt
-        flask/bin/pip install beautifulsoup4
+        flask/bin/pip install -r requirements.txt
         
 3. Install javascript packages
 
