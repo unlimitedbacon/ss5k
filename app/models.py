@@ -18,14 +18,15 @@ class User(db.Model):
     last_seen = db.Column(db.DateTime)
 
     def set_password(self, password):
-        self.password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+        self.password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode('utf-8')
+        print(self.password)
 
     def reset_password(self):
         self.passwordReset = base64.b32encode(os.urandom(20)).decode('utf-8')
         self.passwordResetExpiry = datetime.now() + timedelta(days=1)
 
     def verify_password(self, password):
-        return bcrypt.checkpw(password.encode(), self.password)
+        return bcrypt.checkpw(password.encode(), self.password.encode())
 
     def avatar(self, size):
         return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' % ( md5(self.email.encode('utf-8')).hexdigest(), size )
