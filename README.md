@@ -28,3 +28,13 @@ The Scrap Scanner 5000 is designed to run on Python 3.6 and uses the [Flask fram
         $ flask/bin/python
         >>> from app import db
         >>> db.create_all()
+        
+5. Import the list of junkyards. If using the default SQLite database you can do this easily with sqlite-browser. If on a production server running Postgres, do this from an SQL prompt.
+
+        => \copy junkyard FROM 'junkyards.csv' DELIMITER ',' CSV HEADER;
+        
+6. Install and start a mail server as per your distribution's instructions.
+
+7. Start the debug server
+
+        $ ./manage.py runserver
