@@ -22,8 +22,14 @@ p {
 
 <table>
 	<tr>
-		<td rowspan="3"><a href="{{car.imglink}}"><img src="{{car.image}}"/></a></td>
+		<td rowspan="5"><a href="{{car.imglink}}"><img src="{{car.image}}"/></a></td>
 		<th>{{car.year}} {{car.make}} {{car.model}}</th>
+	</tr>
+	<tr>
+		<td>{{yard.company}} {{yard.name}}</td>
+	</tr>
+	<tr>
+		<td>{{yard.city}}, {{yard.state}}</td>
 	</tr>
 	<tr>
 		<td>Added: {{car.arrival_date}}</td>
