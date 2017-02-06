@@ -1,0 +1,15 @@
+New {{car.make}} {{car.model}} at the junkard
+
+
+{{car.year}} {{car.make}} {{car.model}}
+{{yard.company}} {{yard.name}}
+{{yard.city}}, {{yard.state}}
+Added: {{car.arrival_date}}
+{{car.notes}}
+
+Picture:
+{{car.imglink}}
+
+
+Click here to stop receiving these emails.
+{{ url_for('your_cars', _external=True) }}

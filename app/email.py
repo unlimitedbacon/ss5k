@@ -30,7 +30,7 @@ def send_reset(user):
 def send_notification(user, car, yard):
     msg = Message('New %s %s at the %s junkyard' % (car.make, car.model, yard.city))
     msg.recipients = [user.email]
-    #msg.body = render_template('emails/notification.txt', user=user, car=car)
+    msg.body = render_template('emails/notification.txt', user=user, car=car, yard=yard)
     msg.html = render_template('emails/notification.html', user=user, car=car, yard=yard)
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()

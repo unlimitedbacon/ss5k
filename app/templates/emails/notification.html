@@ -20,24 +20,28 @@ p {
 
 	<h2>New {{car.make}} {{car.model}} at the junkard</h2>
 
-<table>
-	<tr>
-		<td rowspan="5"><a href="{{car.imglink}}"><img src="{{car.image}}"/></a></td>
-		<th>{{car.year}} {{car.make}} {{car.model}}</th>
-	</tr>
-	<tr>
-		<td>{{yard.company}} {{yard.name}}</td>
-	</tr>
-	<tr>
-		<td>{{yard.city}}, {{yard.state}}</td>
-	</tr>
-	<tr>
-		<td>Added: {{car.arrival_date}}</td>
-	</tr>
-	<tr>
-		<td>{{car.notes}}</td>
-	</tr>
-</table>
+	<table>
+		<tr>
+			<td rowspan="5"><a href="{{car.imglink}}"><img src="{{car.image}}"/></a></td>
+			<th>{{car.year}} {{car.make}} {{car.model}}</th>
+		</tr>
+		<tr>
+			<td>{{yard.company}} {{yard.name}}</td>
+		</tr>
+		<tr>
+			<td>{{yard.city}}, {{yard.state}}</td>
+		</tr>
+		<tr>
+			<td>Added: {{car.arrival_date}}</td>
+		</tr>
+		<tr>
+			<td>{{car.notes}}</td>
+		</tr>
+	</table>
+
+	<p>
+	<a href="{{ url_for('your_cars', _external=True) }}">Click here</a> to stop receiving these emails.
+	</p>
 
 </body>
 </html>
