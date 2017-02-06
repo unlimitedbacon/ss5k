@@ -42,8 +42,13 @@ def junkscraper(yard, make, model):
 
     for row in soup.findAll('tr', attrs={'class': 'pypvi_resultRow'}):
         c = Car(yard)
-        c.image = row.find(attrs={'class': 'pypvi_image'}).img.get('src')
-        c.imglink = row.find(attrs={'class': 'pypvi_image'}).a.get('href')
+        # Get a picture of the car if it has one, or insert the placeholder if it doesn't
+        try:
+            c.image = row.find(attrs={'class': 'pypvi_image'}).img.get('src')
+            c.imglink = row.find(attrs={'class': 'pypvi_image'}).a.get('href')
+        except AttributeError:
+            c.image = 'https://www.lkqpickyourpart.com/DesktopModules/pyp_vehicleInventory/Images/pypvi_placeholder.png'
+            c.imglink = ''
         c.make = list( row.find(attrs={'class': 'pypvi_make'}).strings )[0]
         c.model = row.find(attrs={'class': 'pypvi_model'}).get_text()
         c.year = row.find(attrs={'class': 'pypvi_year'}).get_text()
