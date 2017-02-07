@@ -3,11 +3,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_mail import Mail
-from config import tmpdir, ADMINS, MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD
+from config import logdir, ADMINS, MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD
 
-# Create tmp directory if it doesn't exist
-if not os.path.exists(tmpdir):
-    os.makedirs(tmpdir)
+# Create log directory if it doesn't exist
+if not os.path.exists(logdir):
+    os.makedirs(logdir)
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -34,7 +34,7 @@ if not app.debug:
 if not app.debug:
     import logging
     from logging.handlers import RotatingFileHandler
-    file_handler = RotatingFileHandler(os.path.join(tmpdir,'ss5k.log'), 'a', 1*1024*1024, 10)
+    file_handler = RotatingFileHandler(os.path.join(logdir,'server.log'), 'a', 1*1024*1024, 10)
     file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
     app.logger.setLevel(logging.INFO)
     file_handler.setLevel(logging.INFO)

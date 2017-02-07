@@ -1,13 +1,14 @@
 #!flask/bin/python
 
+import os
 import re
 import time
 from bs4 import BeautifulSoup
-from datetime import date
+from datetime import date, datetime
 from urllib.request import urlopen
 
-from app import db
-from .models import User, Junkyard, Car
+from app import db, logdir
+from .models import User, Junkyard, Car, WantedCar
 from .email import send_notification
 
 test = True
@@ -32,9 +33,9 @@ def junkscraper(yard, make, model):
     #data = open('testdata/%s.html' % sfilter, 'r').read()
     data = urlopen(url).read().decode('utf-8')
 
-    f = open('testdata/%s.html' % sfilter, 'w')
-    f.write(data)
-    f.close()
+    #f = open('testdata/%s.html' % sfilter, 'w')
+    #f.write(data)
+    #f.close()
 
     soup = BeautifulSoup(data, 'html.parser')
 
@@ -67,6 +68,11 @@ def junkscraper(yard, make, model):
 def scan():
     junkyards = db.session.query(Junkyard)
 
+    then = datetime.now()
+    searchcount = 0
+    newcount = 0
+    emailcount = 0
+
     for yard in junkyards:
         searched = []
         print(':: Scanning Junkyard', yard.code, ':', yard.name, yard.city, yard.state)
@@ -78,12 +84,14 @@ def scan():
                 # Query junkyard api for make/model
                 cars = junkscraper(yard,wantedcar.make,wantedcar.model)
                 numfound = len(cars)
+                searchcount += 1
                 # For each car found, check if it is already in the db. If so, forget about it.
                 for c in reversed(cars):
                     dbcar = Car.query.filter_by(uid=c.uid).first()
                     if dbcar is not None:
                         cars.remove(c)
                 print("      %i cars found, %i not already in database" % (numfound,len(cars)))
+                newcount += len(cars)
                 # For each of the wanted cars, check list from junkyard to see if any match year
                 numsent = 0
                 for g in group:
@@ -94,6 +102,7 @@ def scan():
                             # For each that match, send email
                             send_notification(user, c, yard)
                             numsent += 1
+                            emailcount += 1
                 print("      %i Emails sent" % (numsent))
                 # Mark wanted cars as already searched
                 searched += group
@@ -103,3 +112,15 @@ def scan():
                 db.session.commit()
                 # Be nice to the servers
                 time.sleep(10)
+
+    # Log some statistics
+    now = datetime.now()
+    duration = now - then
+    date = then.ctime()
+    usercount = db.session.query(User).count()
+    wantedcount = db.session.query(WantedCar).count()
+    carcount = db.session.query(Car).count()
+    stats = "Users: %i Wanted Cars: %i Cars in DB: %i Searches Made: %i New Cars: %i Emails sent: %i Scan Time: %f" % (usercount, wantedcount, carcount, searchcount, newcount, emailcount, duration.total_seconds())
+    print(stats)
+    log = open(os.path.join(logdir,'daemon.log'), 'a')
+    print("%s: %s" % (date, stats), file=log)
