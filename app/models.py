@@ -76,7 +76,8 @@ class WantedCar(db.Model):
     years = db.Column(db.String)
     yards = db.relationship('Junkyard',
                             secondary=junkyard_wantedcar_links,
-                            back_populates='wanted_cars')
+                            back_populates='wanted_cars',
+                            order_by='Junkyard.state, Junkyard.city')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, make, model, years, yards, user):

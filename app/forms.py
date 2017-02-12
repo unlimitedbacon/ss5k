@@ -13,8 +13,8 @@ def create_form_options():
     for year in range(datetime.now().year,1886,-1):
         car_year_options.append( (str(year),str(year)) )
 
-    for yard in Junkyard.query.all():
-        junkyard_options.append( (str(yard.id),str("%s - %s" % (yard.state,yard.city))) )
+    for yard in Junkyard.query.order_by(Junkyard.state).order_by(Junkyard.city).all():
+        junkyard_options.append( (str(yard.id),str("%s - %s %s" % (yard.state,yard.name,yard.city))) )
 
 class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[Required(), Length(1, 256), Email()])
