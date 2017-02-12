@@ -28,13 +28,13 @@
 			<div class="collapse navbar-collapse" id="navbar">
 				{% if user.is_authenticated %}
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="{{ url_for('your_cars') }}">Your Cars</a></li>
-					<li><a href="{{ url_for('logout') }}">Logout</a></li>
+					<li><a href="{{ url_for('your_cars') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Your Cars</a></li>
+					<li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
 				</ul>
 				{% else %}
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="{{ url_for('register') }}">Sign Up</a></li>
-					<li><a href="{{ url_for('login') }}">Login</a></li>
+					<li><a href="{{ url_for('register') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Sign Up</a></li>
+					<li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a></li>
 				</ul>
 				{% endif %}
 			</div>
