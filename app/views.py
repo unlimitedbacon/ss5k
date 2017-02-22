@@ -145,7 +145,7 @@ def add_car(title='Add Car',car=None):
         car_id = car.id
         years = car.years.split(', ')
         yards = [ y.id for y in car.yards ]
-        form = AddCarForm(make=car.make,model=car.model,years=years,yards=yards)
+        form = AddCarForm(make=car.make,model=car.model,color=car.color,years=years,yards=yards)
     else:
         form = AddCarForm()
     if request.method == 'GET':
@@ -160,6 +160,7 @@ def add_car(title='Add Car',car=None):
             return redirect(url_for('your_cars'))
         make = form.make.data
         model = form.model.data
+        color = form.color.data
         years = form.years.data
         yards = form.yards.data
         # Check to make sure they actually entered something
@@ -172,7 +173,7 @@ def add_car(title='Add Car',car=None):
         # Delete original if this is an edit
         if edit:
             db.session.delete(car)
-        car = WantedCar(make,model,years,yards,g.user)
+        car = WantedCar(make,model,color,years,yards,g.user)
         db.session.add(car)
         db.session.commit()
         flash('Car Saved', 'success')

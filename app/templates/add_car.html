@@ -14,13 +14,16 @@ Remember, you can select multiple years using SHIFT + Click and CTRL + Click. Sa
 					{{ form.hidden_tag() }}
 					<td>{{ form.make(class_="form-control",placeholder="Make") }}</td>
 					<td>{{ form.model(class_="form-control",placeholder="Model") }}</td>
+					<td>{{ form.color(class_="form-control",placeholder="Color") }}</td>
 					<td>{{ form.years(class_="form-control",style="width:fit-content;") }}</td>
 					<td>{{ form.yards(class_="form-control") }}</td>
 					<td>
-						<a class="btn btn-default" href="{{ url_for('your_cars') }}" role="button">Cancel</a>
-						{{ form.submit(class_="btn btn-primary") }}
+						{{ form.submit(class_="btn btn-primary",style="width:100%;") }}
+						<a class="btn btn-default" style="width:100%;" href="{{ url_for('your_cars') }}" role="button">Cancel</a>
 					</td>
 				</form>
+			</tr>
+			<tr>
 			</tr>
 		</tbody>
 	</table>
@@ -37,14 +40,17 @@ Remember, you can select multiple years using SHIFT + Click and CTRL + Click. Sa
 					{{ form.model(class_="form-control",placeholder="Model") }}
 				</div>
 				<div class="form-group">
+					{{ form.color(class_="form-control",placeholder="Color") }}
+				</div>
+				<div class="form-group">
 					{{ form.years(class_="form-control") }}
 				</div>
 				<div class="form-group">
 					{{ form.yards(class_="form-control") }}
 				</div>
 				<div class="form-group">
-					<a class="btn btn-default" href="{{ url_for('your_cars') }}" role="button">Cancel</a>
 					{{ form.submit(class_="btn btn-primary") }}
+					<a class="btn btn-default" href="{{ url_for('your_cars') }}" role="button">Cancel</a>
 				</div>
 			</form>
 		</div>

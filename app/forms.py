@@ -39,6 +39,7 @@ class AddCarForm(FlaskForm):
     make = StringField('make')
     model = StringField('model')
     years = SelectMultipleField('years', choices=car_year_options)
+    color = StringField('color')
     yards = SelectMultipleField('yards', choices=junkyard_options)
     submit = SubmitField('Add Car')
 

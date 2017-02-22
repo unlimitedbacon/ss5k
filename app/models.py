@@ -73,6 +73,7 @@ class WantedCar(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     make = db.Column(db.String)
     model = db.Column(db.String)
+    color = db.Column(db.String)
     years = db.Column(db.String)
     yards = db.relationship('Junkyard',
                             secondary=junkyard_wantedcar_links,
@@ -80,9 +81,10 @@ class WantedCar(db.Model):
                             order_by='Junkyard.state, Junkyard.city')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, make, model, years, yards, user):
+    def __init__(self, make, model, color, years, yards, user):
         self.make = make
         self.model = model
+        self.color = color
         self.years = ', '.join(years)
         self.user_id = user.id
         for yard in yards:
@@ -114,7 +116,7 @@ class Junkyard(db.Model):
     def match_searches(self, wanted_car):
         matches = []
         for c in self.wanted_cars:
-            if c.make == wanted_car.make and c.model == wanted_car.model:
+            if c.make == wanted_car.make and c.model == wanted_car.model and c.color == wanted_car.color:
                 matches.append(c)
         return matches
 

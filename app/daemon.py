@@ -8,14 +8,24 @@ from datetime import date, datetime
 from urllib.request import urlopen
 
 from app import db, logdir
+from config import SCAN_DELAY
 from .models import User, Junkyard, Car, WantedCar
 from .email import send_notification
 
 test = True
 
-def junkscraper(yard, make, model):
+def junkscraper(yard, make, model, color):
+    # Clean up strings
+    if make is None:
+        make = ''
+    if model is None:
+        model = ''
+    if color is None:
+        color = ''
+
+    # Create URL
     store = str(yard.code)
-    sfilter = "+".join([make,model]).replace(' ','+')
+    sfilter = "+".join([make,model,color]).replace(' ','+')
     page = "0"
     special = ""
     classics = ""
@@ -30,6 +40,8 @@ def junkscraper(yard, make, model):
 
     url = site + path + '?store=' + store + '&page=' + page + '&filter=' + sfilter + '&sp=' + special + '&cl=' + classics + '&carbuyYardCode=' + carbuyYardCode + '&pageSize=' + pageSize + '&language=' + language + '&thumbQ=' + thumbQ + '&fullQ=' + fullQ
 
+    # Fetch Data
+    # Commented out lines are for storing and reading data for debugging
     #data = open('testdata/%s.html' % sfilter, 'r').read()
     data = urlopen(url).read().decode('utf-8')
 
@@ -37,6 +49,7 @@ def junkscraper(yard, make, model):
     #f.write(data)
     #f.close()
 
+    # Parse Data
     soup = BeautifulSoup(data, 'html.parser')
 
     cars = []
@@ -80,9 +93,9 @@ def scan():
             if not wantedcar in searched:
                 # Check for any other wanted cars with matching make/model
                 group = yard.match_searches(wantedcar)
-                print("   %i people looking for %s %s" % (len(group),wantedcar.make,wantedcar.model))
+                print("   %i people looking for %s %s %s" % (len(group),wantedcar.make,wantedcar.model,wantedcar.color))
                 # Query junkyard api for make/model
-                cars = junkscraper(yard,wantedcar.make,wantedcar.model)
+                cars = junkscraper(yard,wantedcar.make,wantedcar.model,wantedcar.color)
                 numfound = len(cars)
                 searchcount += 1
                 # For each car found, check if it is already in the db. If so, forget about it.
@@ -111,7 +124,7 @@ def scan():
                     db.session.add(c)
                 db.session.commit()
                 # Be nice to the servers
-                time.sleep(10)
+                time.sleep(SCAN_DELAY)
 
     # Log some statistics
     now = datetime.now()

@@ -9,7 +9,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 WTF_SCRF_ENABLED = True
 SECRET_KEY = "%Sy@i$6$suq@0cNO"
 
-#Mail server settings
+# Mail server settings
 MAIL_SERVER = 'localhost'
 MAIL_PORT = 25
 MAIL_USE_TLS = False
@@ -20,5 +20,8 @@ MAIL_DEFAULT_SENDER = 'scrapscanner5000@garage-laptop.localdomain'
 MAIL_MAX_EMAILS = None
 MAIL_ASCII_ATTACHMENTS = False
 
-#Administrator list
+# Administrator list
 ADMINS = ['tyler@garage-laptop.localdomain']
+
+# Scan Settings
+SCAN_DELAY = 5
