@@ -112,11 +112,11 @@ class Junkyard(db.Model):
                            back_populates='yards',
                            lazy='subquery')
 
-    # Get a list of other wanted cars with matching make/model
-    def match_searches(self, wanted_car):
+    # Get a list of other wanted cars with similar criteria
+    def match_searches(self, w):
         matches = []
         for c in self.wanted_cars:
-            if c.make == wanted_car.make and c.model == wanted_car.model and c.color == wanted_car.color:
+            if c.make.lower() == w.make.lower() and c.model.lower() == w.model.lower() and c.color.lower() == w.color.lower():
                 matches.append(c)
         return matches
 
