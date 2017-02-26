@@ -5,3 +5,4 @@ __pycache__/
 tmp/*
 app/__pycache__/
 node_modules/
+log/*
