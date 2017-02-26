@@ -1,4 +1,13 @@
 {% extends "base.html" %}
+
+{% macro any_if_blank(x) -%}
+	{% if x == '' %}
+		<font color="gray"><em>Any</em></font>
+	{% else %}
+		{{ x }}
+	{% endif %}
+{%- endmacro %}
+
 {% block content %}
 <div class="page-header">
 	<h1>Your Cars</h1>
@@ -18,11 +27,11 @@ Check the vehicle inventory at <a href="https://www.lkqpickyourpart.com/">lkqpic
 		</tr>
 		{% for car in cars %}
 		<tr>
-			<td>{{ car.make }}</td>
-			<td>{{ car.model }}</td>
-			<td>{{ car.color }}</td>
-			<td>{{ car.years }}</td>
-			<td>{{ car.list_yards() }}</td>
+			<td>{{ any_if_blank(car.make) }}</td>
+			<td>{{ any_if_blank(car.model) }}</td>
+			<td>{{ any_if_blank(car.color) }}</td>
+			<td>{{ any_if_blank(car.years) }}</td>
+			<td>{{ any_if_blank(car.list_yards()) }}</td>
 			<td>
 				<a class="btn btn-default" href="{{ url_for('edit_car',car_id=car.id) }}" role="button">Edit</a>
 				<a class="btn btn-danger" href="{{ url_for('delete_car',car_id=car.id) }}" role="button">Delete</a>

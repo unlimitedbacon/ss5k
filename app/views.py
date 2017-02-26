@@ -168,7 +168,7 @@ def add_car(title='Add Car',car=None):
             flash('You need to enter a make, a model, or a year')
             return render_template('add_car.html', title=title, form=form)
         if yards == []:
-            flash('You need to choose at leat one junkyard')
+            flash('You need to choose at least one junkyard')
             return render_template('add_car.html', title=title, form=form)
         # Delete original if this is an edit
         if edit:
