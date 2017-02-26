@@ -111,7 +111,7 @@ def scan():
                     user = User.query.get(g.user_id)
                     years = g.years.split(', ')
                     for c in cars:
-                        if c.year in years:
+                        if c.year in years or years == []:
                             # For each that match, send email
                             send_notification(user, c, yard)
                             numsent += 1
