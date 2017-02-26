@@ -73,6 +73,7 @@ def junkscraper(yard, make, model, color):
         c.arrival_date = date(int(year),int(month),int(day))
 
         c.uid = c.image.split('/')[5].split('.')[0]
+        c.last_seen = datetime.now()
 
         cars.append(c)
 
@@ -102,6 +103,7 @@ def scan():
                 for c in reversed(cars):
                     dbcar = Car.query.filter_by(uid=c.uid).first()
                     if dbcar is not None:
+                        dbcar.last_seen = c.last_seen
                         cars.remove(c)
                 print("      %i cars found, %i not already in database" % (numfound,len(cars)))
                 newcount += len(cars)

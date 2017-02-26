@@ -142,6 +142,7 @@ class Car(db.Model):
     arrival_date = db.Column(db.Date)
     notes = db.Column(db.Text)
     yard_id = db.Column(db.Integer, db.ForeignKey('junkyard.id'))
+    last_seen = db.Column(db.DateTime)
     
     def __init__(self, yard):
         self.yard_id = yard.id
