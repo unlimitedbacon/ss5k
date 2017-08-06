@@ -11,30 +11,34 @@ Setup
 
 The Scrap Scanner 5000 is designed to run on Python 3.6 and uses the [Flask framework](http://flask.pocoo.org/).
 
-1. Create a virtualenv for python.
+1. Copy the example config and change things as needed.
+
+        $ cp config.py.example config.py
+
+2. Create a virtualenv for python.
 
         $ python -m venv flask
 
-2. Install python packages
+3. Install python packages
 
         $ flask/bin/pip install -r requirements.txt
         
-3. Install javascript packages
+4. Install javascript packages
 
         $ npm update
 
-4. Setup the database.
+5. Setup the database.
 
         $ flask/bin/python
         >>> from app import db
         >>> db.create_all()
         
-5. Import the list of junkyards. If using the default SQLite database you can do this easily with sqlite-browser. If on a production server running Postgres, do this from an SQL prompt.
+6. Import the list of junkyards. If using the default SQLite database you can do this easily with sqlite-browser. If on a production server running Postgres, do this from an SQL prompt.
 
         => \copy junkyard FROM 'junkyards.csv' DELIMITER ',' CSV HEADER;
         
-6. Install and start a mail server as per your distribution's instructions.
+7. Install and start a mail server as per your distribution's instructions.
 
-7. Start the debug server
+8. Start the debug server
 
         $ ./manage.py runserver
