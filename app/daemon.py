@@ -25,20 +25,10 @@ def junkscraper(yard, make, model, color):
 
     # Create URL
     store = str(yard.code)
-    sfilter = "+".join([make,model,color]).replace(' ','+')
-    page = "0"
-    special = ""
-    classics = ""
-    carbuyYardCode = '1'+store
-    pageSize = "100"
-    language = "en-US"
-    thumbQ = "60"
-    fullQ = "70"
+    search = "+".join([make,model,color]).replace(' ','+')
 
-    site = "https://www.lkqpickyourpart.com"
-    path = "/DesktopModules/pyp_vehicleInventory/getVehicleInventory.aspx"
-
-    url = site + path + '?store=' + store + '&page=' + page + '&filter=' + sfilter + '&sp=' + special + '&cl=' + classics + '&carbuyYardCode=' + carbuyYardCode + '&pageSize=' + pageSize + '&language=' + language + '&thumbQ=' + thumbQ + '&fullQ=' + fullQ
+    #url = site + path + '?store=' + store + '&page=' + page + '&filter=' + sfilter + '&sp=' + special + '&cl=' + classics + '&carbuyYardCode=' + carbuyYardCode + '&pageSize=' + pageSize + '&language=' + language + '&thumbQ=' + thumbQ + '&fullQ=' + fullQ
+    url = "https://www.lkqpickyourpart.com/locations/somewhere-" + store + "/recents/?search=" + search
 
     # Fetch Data
     # Commented out lines are for storing and reading data for debugging
@@ -54,25 +44,35 @@ def junkscraper(yard, make, model, color):
 
     cars = []
 
-    for row in soup.findAll('tr', attrs={'class': 'pypvi_resultRow'}):
+    for row in soup.findAll('div', attrs={'class': 'pypvi_resultRow'}):
         c = Car(yard)
         # Get a picture of the car if it has one, or insert the placeholder if it doesn't
         try:
             c.image = row.find(attrs={'class': 'pypvi_image'}).img.get('src')
-            c.imglink = row.find(attrs={'class': 'pypvi_image'}).a.get('href')
+            c.imglink = row.find(attrs={'class': 'pypvi_image'}).get('href')
         except AttributeError:
             c.image = 'https://www.lkqpickyourpart.com/DesktopModules/pyp_vehicleInventory/Images/pypvi_placeholder.png'
             c.imglink = ''
-        c.make = list( row.find(attrs={'class': 'pypvi_make'}).strings )[0]
-        c.model = row.find(attrs={'class': 'pypvi_model'}).get_text()
-        c.year = row.find(attrs={'class': 'pypvi_year'}).get_text()
-        c.notes = row.find(attrs={'class': 'pypvi_notes'}).get_text('\n')
+        ymm = row.find(attrs={'class': 'pypvi_ymm'}).get_text().split(' ', 2)
+        #c.make = list( row.find(attrs={'class': 'pypvi_make'}).strings )[0]
+        #c.model = row.find(attrs={'class': 'pypvi_model'}).get_text()
+        #c.year = row.find(attrs={'class': 'pypvi_year'}).get_text()
+        c.year = ymm[0]
+        c.make = ymm[1]
+        c.model = ymm[2]
+        #c.notes = row.find(attrs={'class': 'pypvi_notes'}).get_text('\n')
+        c.notes = ''
+        for n in row.find_all(attrs={'class': 'pypvi_detailItem'}):
+            c.notes += n.get_text()
+            c.notes += '/n'
 
-        datestr = row.find(attrs={'class': 'pypvi_date'}).get_text()
+        #datestr = row.find(attrs={'class': 'pypvi_date'}).get_text()
+        datestr = row.find('time').get_text()
         month,day,year = datestr.split('/')
         c.arrival_date = date(int(year),int(month),int(day))
 
-        c.uid = c.image.split('/')[5].split('.')[0]
+        #c.uid = c.image.split('/')[5].split('.')[0]
+        c.uid = row['id']     # Other possibility
         c.last_seen = datetime.now()
 
         cars.append(c)
