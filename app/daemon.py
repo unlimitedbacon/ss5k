@@ -64,7 +64,7 @@ def junkscraper(yard, make, model, color):
         c.notes = ''
         for n in row.find_all(attrs={'class': 'pypvi_detailItem'}):
             c.notes += n.get_text()
-            c.notes += '/n'
+            c.notes += '\n'
 
         #datestr = row.find(attrs={'class': 'pypvi_date'}).get_text()
         datestr = row.find('time').get_text()
